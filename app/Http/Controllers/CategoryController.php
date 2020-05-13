@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::latest()->get();
+        return CategoryResource::collection(Category::latest()->get());
     }
 
     /**
@@ -30,7 +31,9 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = str_slug($request->name);
         $category->save();
-        return response('Created' , 201);
+        return response([
+            'category' => new CategoryResource($category)
+            ] , 201);
     }
 
     /**
@@ -41,7 +44,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return $category;
+        return new CategoryResource($category);
     }
 
     /**
@@ -58,7 +61,9 @@ class CategoryController extends Controller
             'name' => $request->name,
             'slug' => str_slug($request->name)
         ]);
-        return response('updated' , 202);
+        return response([
+            'updated' => new CategoryResource($category)
+            ] , 202);
     }
 
     /**
