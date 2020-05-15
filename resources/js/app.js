@@ -32,6 +32,9 @@ import vuetify from './vuetify/index.js'
 
 import App from './App.vue'
 
+import User from './Helpers/user.js'
+window.User = User
+
 import router from './Router/router.js'
 const app = new Vue({
     vuetify,
