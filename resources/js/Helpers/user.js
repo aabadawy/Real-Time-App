@@ -8,16 +8,15 @@ class User{
       .catch(error => console.log(error.response.data))
     }
 
-    signup(data){
+    signup(data,errors){
         axios.post('/api/auth/signup', data)
         .then(res => this.responseAfterLogin(res))
-        .catch(console.log(error.response.data))
+        .catch(error => errors = error.response.data.errors)
     }
 
     responseAfterLogin(res){
         const access_token = res.data.access_token
         const userName = res.data.user 
-
         if(Token.isValid(access_token)){
             AppStorage.store(access_token,userName);
         }

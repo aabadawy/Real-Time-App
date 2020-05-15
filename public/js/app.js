@@ -2087,9 +2087,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2098,12 +2095,19 @@ __webpack_require__.r(__webpack_exports__);
         email: null,
         password: null,
         password_confirmation: null
-      }
+      },
+      errors: {}
     };
   },
   methods: {
     signup: function signup() {
-      User.signup(this.form);
+      var _this = this;
+
+      axios.post('/api/auth/signup', this.form).then(function (res) {
+        return User.responseAfterLogin(res);
+      })["catch"](function (error) {
+        return _this.errors = error.response.data.errors;
+      });
     }
   }
 });
@@ -38509,7 +38513,7 @@ var render = function() {
       },
       [
         _c("v-text-field", {
-          attrs: { label: "Name", type: "text", required: "" },
+          attrs: { label: "Name", type: "text" },
           model: {
             value: _vm.form.name,
             callback: function($$v) {
@@ -38519,8 +38523,14 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _vm.errors.name
+          ? _c("span", { staticClass: "red--text" }, [
+              _vm._v(_vm._s(_vm.errors.name[0]))
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("v-text-field", {
-          attrs: { label: "E-mail", type: "email", required: "" },
+          attrs: { label: "E-mail", type: "email" },
           model: {
             value: _vm.form.email,
             callback: function($$v) {
@@ -38530,8 +38540,14 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _vm.errors.email
+          ? _c("span", { staticClass: "red--text" }, [
+              _vm._v(_vm._s(_vm.errors.email[0]))
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("v-text-field", {
-          attrs: { label: "Password", type: "password", required: "" },
+          attrs: { label: "Password", type: "password" },
           model: {
             value: _vm.form.password,
             callback: function($$v) {
@@ -38541,8 +38557,14 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _vm.errors.password
+          ? _c("span", { staticClass: "red--text" }, [
+              _vm._v(_vm._s(_vm.errors.password[0]))
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("v-text-field", {
-          attrs: { label: "Password", type: "password", required: "" },
+          attrs: { label: "Password", type: "password" },
           model: {
             value: _vm.form.password_confirmation,
             callback: function($$v) {
@@ -95699,7 +95721,7 @@ var Token = /*#__PURE__*/function () {
       var payload = this.payload(token);
 
       if (payload) {
-        return payload.iss == "http://realtimeapp.com/api/auth/login" ? true : false;
+        if (payload.iss == "http://realtimeapp.com/api/auth/login") return true;else if (payload.iss == "http://realtimeapp.com/api/auth/signup") return true;else return false;
       }
 
       return false;
@@ -95762,12 +95784,14 @@ var User = /*#__PURE__*/function () {
     }
   }, {
     key: "signup",
-    value: function signup(data) {
+    value: function signup(data, errors) {
       var _this2 = this;
 
       axios.post('/api/auth/signup', data).then(function (res) {
         return _this2.responseAfterLogin(res);
-      })["catch"](console.log(error.response.data));
+      })["catch"](function (error) {
+        return errors = error.response.data.errors;
+      });
     }
   }, {
     key: "responseAfterLogin",
