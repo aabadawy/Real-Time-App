@@ -5,8 +5,10 @@ Vue.use(VueRouter)
 
 
 import Login from '../components/Login/Login'
+import signup from '../components/Login/signup'
 const routes = [
     { path: '/login', component: Login },
+    { path: '/signup', component: signup},
 ]
 
 const router = new VueRouter({

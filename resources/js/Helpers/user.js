@@ -8,6 +8,12 @@ class User{
       .catch(error => console.log(error.response.data))
     }
 
+    signup(data){
+        axios.post('/api/auth/signup', data)
+        .then(res => this.responseAfterLogin(res))
+        .catch(console.log(error.response.data))
+    }
+
     responseAfterLogin(res){
         const access_token = res.data.access_token
         const userName = res.data.user 

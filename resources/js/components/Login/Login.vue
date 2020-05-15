@@ -14,10 +14,15 @@
         type="password"
         required
       ></v-text-field>
-      <v-btn class="mr-4" 
+      <v-btn class="mr-4" color="green"
       type="submit"
-      >submit
+      >Signin
       </v-btn>
+      <router-link to="/signup">
+            <v-btn text class="mx-2" color="blue">
+                <v-icon>mdi-account-circle</v-icon>Signup
+            </v-btn>
+        </router-link>
     </form>
   </v-container>
 </template>
