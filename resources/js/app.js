@@ -18,7 +18,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('app-home', require('./components/AppHome.vue').default);
 
 
 /**
@@ -32,8 +32,10 @@ import vuetify from './vuetify/index.js'
 
 import App from './App.vue'
 
+import router from './Router/router.js'
 const app = new Vue({
     vuetify,
     render: h => h(App),
     el: '#app',
+    router
 });
