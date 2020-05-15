@@ -25,7 +25,7 @@ class SignupRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,'.$this->get('id'),
             'password' => 'required|confirmed'
         ];
     }
