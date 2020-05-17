@@ -41,9 +41,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = str_slug($request->name);
         $category->save();
-        return response([
-            'category' => new CategoryResource($category)
-            ] , 201);
+        return response([new CategoryResource($category)] , 201);
     }
 
     /**
