@@ -7,21 +7,24 @@
                 :key="question.id"
                 :data=question
                 ></question>
+            </v-flex >
+            <v-flex xs4>
+                <sidebar></sidebar>
             </v-flex>
-                Sidebar
         </v-layout>
     </v-container>
 </template>
 
 <script>
 import question from './question'
+import sidebar from './sidebar'
 export default {
     data(){
         return{
         questions:{},
         }
     },
-    components:{question},
+    components:{question,sidebar},
     created(){
         axios.get('/api/question')
         .then(res => this.questions = res.data.data)
