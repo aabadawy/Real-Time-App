@@ -32,7 +32,7 @@ export default {
                 {title: 'Forum' , ic: 'mdi-forum' , to:'/forum', show:true},
                 {title: 'Login' , ic: 'mdi-account-circle' , to:'/login', show: !User.loggedIn()},
                 {title: 'Ask Question' , ic: 'mdi-pencil' , to:'/ask', show: User.loggedIn()},
-                {title: 'Category' , ic: 'mdi-format-list-bulleted-square' , to:'/category', show: User.loggedIn()},
+                {title: 'Category' , ic: 'mdi-format-list-bulleted-square' , to:'/category' , show: User.loggedIn() && User.isAdmin()},
                 {title: 'Logout' , ic: 'mdi-account-circle' , to:'/logout', show: User.loggedIn()},
             ]
         }

@@ -48,10 +48,14 @@ export default {
             form:{
                 name:null,
             },
+            category:{},
             editSlug:null,
         }
     },
     created(){
+        if(!User.isAdmin()){
+            this.$router.push('/forum')
+        }
         axios.get(`/api/category`)
         .then(res => this.categories = res.data.data)
         
@@ -80,11 +84,13 @@ export default {
             })
         },
         edit(index){
+            this.category = this.categories[index]
             this.form.name = this.categories[index].name
             this.editSlug = this.categories[index].slug
             this.categories.splice(index,1)
         },
         cancel(){
+            this.categories.unshift(this.category)
             this.form.name = null
             this.editSlug = null
         }
