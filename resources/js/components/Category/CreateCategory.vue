@@ -1,8 +1,8 @@
 <template>
-  <v-container>
       <v-form @submit.prevent="create">
           <v-text-field
             label="Category Name"
+            type="text"
             v-model="form.name"
             required
             ></v-text-field>
@@ -11,7 +11,6 @@
             >Craete
             </v-btn>
       </v-form>
-  </v-container>
 </template>
 
 <script>
@@ -26,7 +25,7 @@ export default {
     methods:{
         create(){
             axios.post(`/api/category`,this.form)
-            .then(res => console.log(res.data))
+            .then(res => this.$router.push('/category'))
         }
     }
 }

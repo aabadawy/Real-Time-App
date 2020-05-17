@@ -11,7 +11,7 @@ import Forum from '../components/Forum/Forum'
 import ask from '../components/Forum/createQuestion'
 import singleQuestion from '../components/Forum/read'
 
-import CreateCategory from '../components/Category/CreateCategory'
+import CreateCategory from '../components/Category/Read'
 
 const routes = [
     { path: '/login', component: Login },
