@@ -11,6 +11,8 @@ import Forum from '../components/Forum/Forum'
 import ask from '../components/Forum/createQuestion'
 import singleQuestion from '../components/Forum/read'
 
+import CreateCategory from '../components/Category/CreateCategory'
+
 const routes = [
     { path: '/login', component: Login },
     { path: '/logout', component: logout},
@@ -18,6 +20,8 @@ const routes = [
     { path: '/forum', component: Forum , name:'forum'},
     { path: '/ask', component: ask},
     { path: '/question/:slug', component: singleQuestion , name:'read'},
+
+    {path : '/category', component: CreateCategory }
 ]
 
 const router = new VueRouter({
