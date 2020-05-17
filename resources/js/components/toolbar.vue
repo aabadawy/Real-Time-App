@@ -12,7 +12,7 @@
       
       v-for="item in items"
       :key="item.title"
-      :to="item.title" 
+      :to="item.to"  
       v-if="item.show"
       >
             <v-btn text class="mx-2">
@@ -29,11 +29,11 @@ export default {
     data(){
         return{
             items: [
-                {title: 'Forum' , ic: 'mdi-forum' , to:'forum', show:true},
-                {title: 'Login' , ic: 'mdi-account-circle' , to:'login', show: !User.loggedIn()},
-                {title: 'Ask Question' , ic: 'mdi-pencil' , to:'ask', show: User.loggedIn()},
-                {title: 'Category' , ic: 'mdi-format-list-bulleted-square' , to:'category', show: User.loggedIn()},
-                {title: 'Logout' , ic: 'mdi-account-circle' , to:'logout', show: User.loggedIn()},
+                {title: 'Forum' , ic: 'mdi-forum' , to:'/forum', show:true},
+                {title: 'Login' , ic: 'mdi-account-circle' , to:'/login', show: !User.loggedIn()},
+                {title: 'Ask Question' , ic: 'mdi-pencil' , to:'/ask', show: User.loggedIn()},
+                {title: 'Category' , ic: 'mdi-format-list-bulleted-square' , to:'/category', show: User.loggedIn()},
+                {title: 'Logout' , ic: 'mdi-account-circle' , to:'/logout', show: User.loggedIn()},
             ]
         }
     },

@@ -14,6 +14,7 @@
         "laravel/helpers": "^1.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.2",
+        "nesbot/carbon": "^2.34",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

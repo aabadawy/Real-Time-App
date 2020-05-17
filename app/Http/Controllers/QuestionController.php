@@ -37,9 +37,9 @@ class QuestionController extends Controller
     public function store(Request $request)
     {   
         // In Next line It gonna Create new question just for authunticate user , with his spacific ID
-        // auth()->user()->question->create($request->all());
-         Question::create($request->all());
-         return response('Created' , 201);
+        // $request['slug'] = str_slug($request->title);
+        $question = auth()->user()->questions()->create($request->all());
+         return response(new QuestionResource($question) , 201);
     }
 
     /**

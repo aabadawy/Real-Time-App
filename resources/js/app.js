@@ -35,6 +35,14 @@ import App from './App.vue'
 import User from './Helpers/user.js'
 window.User = User
 
+import VueSimplemde from 'vue-simplemde'
+import 'simplemde/dist/simplemde.min.css'
+
+import md from 'marked'
+window.md = md
+
+Vue.component('vue-simplemde', VueSimplemde)
+
 window.EventBus = new Vue();
 
 import router from './Router/router.js'

@@ -2,12 +2,15 @@
 
 namespace App\Exceptions;
 
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+
+
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+
 
 
 class Handler extends ExceptionHandler
@@ -55,19 +58,41 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        
-        if($exception instanceof TokenBlacklistedException){
-            return response(['error' => 'Token cant be used , Try new one!'] , 400);
+        if ($exception instanceof UnauthorizedHttpException) {
+            if($exception instanceof TokenBlacklistedException){
+                return response(['error' => 'Token cant be used , Try new one!'] , 400);
+            }
+            elseif($exception instanceof TokenInvalidException){
+                return response(['error' => 'Token is invalid'] , 500);
+            }
+            elseif($exception instanceof TokenExpiredException){
+                return response(['error' => 'Token is Expired'] , 500);
+            }
+            elseif($exception instanceof JWTException){
+                return response(['error' => 'Token is not provided'] , 400);
+            }
+            else {
+            return response()->json(['error' => "UNAUTHORIZED_REQUEST"], 401);
+            }
         }
-        elseif($exception instanceof TokenInvalidException){
-            return response(['error' => 'Token is invalid'] , 500);
-        }
-        elseif($exception instanceof TokenExpiredException){
-            return response(['error' => 'Token is Expired'] , 500);
-        }
-        elseif($exception instanceof JWTException){
-            return response(['error' => 'Token is not provided'] , 400);
-        }
+
         return parent::render($request, $exception);
     }
+    // public function render($request, Exception $exception)
+    // {
+    //     // detect instance
+    //     if ($exception instanceof UnauthorizedHttpException) {
+    //         // detect previous instance
+    //         if ($exception->getPrevious() instanceof TokenExpiredException) {
+    //             return response()->json(['error' => 'TOKEN_EXPIRED'], $exception->getStatusCode());
+    //         } else if ($exception->getPrevious() instanceof TokenInvalidException) {
+    //             return response()->json(['error' => 'TOKEN_INVALID'], $exception->getStatusCode());
+    //         } else if ($exception->getPrevious() instanceof TokenBlacklistedException) {
+    //             return response()->json(['error' => 'TOKEN_BLACKLISTED'], $exception->getStatusCode());
+    //         } else {
+    //             return response()->json(['error' => "UNAUTHORIZED_REQUEST"], 401);
+    //         }
+    //     }
+    //     return parent::render($request, $exception);
+    // }
 }
