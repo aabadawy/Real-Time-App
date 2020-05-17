@@ -9,7 +9,7 @@
                     <span class="grey--text">Posted {{data.created_at}} By {{data.user}}</span>
                 </div>
                 <v-spacer></v-spacer>
-                <v-btn color="success">5 replies</v-btn>
+                <v-btn color="success">{{data.reply_count}} replies</v-btn>
             </v-card-title>
             <v-card-text v-html="body"></v-card-text>
             <v-card-actions v-if="own" @click="edit">
