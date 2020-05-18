@@ -6,36 +6,55 @@
                 <small class="ml-2 grey--text">Said <i>{{data.created_at}}</i></small>
             </v-card-title>
             <v-divider></v-divider>
-            <v-card-text v-html="body"></v-card-text>
+            <v-card-text v-html="body" v-if="!editing"></v-card-text>
+            <edit-reply v-else :reply=data></edit-reply>
             <v-divider></v-divider>
-            <v-card-actions v-if="own">
-                <v-btn icon >
-                    <v-icon  color="orange">mdi-pencil</v-icon>
-                </v-btn>
-                <v-btn icon @click="destroy" >
-                    <v-icon  color="error">mdi-delete</v-icon>
-                </v-btn>
-            </v-card-actions>
+            <div v-if="!editing">
+                <v-card-actions v-if="own">
+                    <v-btn icon @click="edit">
+                        <v-icon  color="orange">mdi-pencil</v-icon>
+                    </v-btn>
+                    <v-btn icon @click="destroy" >
+                        <v-icon  color="error">mdi-delete</v-icon>
+                    </v-btn>
+                </v-card-actions>
+            </div>
         </v-card>
     </div>
 </template>
 
 <script>
+import EditReply from './editReply'
 export default {
     props:['data','index'],
+    components:{EditReply},
     data(){
         return{
-            own: User.own(this.data.user_id)
+            editing:false
         }
     },
     computed:{
+        own(){
+            return User.own(this.data.user_id)
+        },
         body(){
             return md.parse(this.data.reply)
         },
     },
+    created(){
+        this.listen()
+    },
     methods:{
         destroy(){
             EventBus.$emit('deleteReply',this.index)
+        },
+        edit(){
+            this.editing=true
+        },
+        listen(){
+            EventBus.$on('cancelEditing', ()=>{
+                this.editing = false
+            })
         }
     }
 }
