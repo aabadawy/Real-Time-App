@@ -12,7 +12,7 @@ export default {
     props:['question_slug'],
     data(){
         return{
-                body:null,
+                body: '',
         }
     },
     methods:{
@@ -20,7 +20,7 @@ export default {
         submit(){
             axios.post(`/api/question/${this.question_slug}/reply`,{body:this.body})
             .then(res => {
-                this.body = null
+                this.body = ''
                 EventBus.$emit('newReply' , res.data)
                 window.scrollTo(0,0)
             })
