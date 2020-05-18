@@ -7,6 +7,14 @@ use App\User;
 class Reply extends Model
 {
     protected $guarded = ['id'];
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function($reply){
+            $reply->user_id = auth()->id();
+        });
+    }
     public function question()
     {
         return $this->belongsTo(Question::class);
