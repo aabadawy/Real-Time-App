@@ -16,12 +16,18 @@
 export default {
     props:['reply'],
     methods:{
-        cancel(){
-            EventBus.$emit('cancelEditing')
+        cancel(reply){
+            EventBus.$emit('cancelEditing' ,)
+            // I will add the next line untill now how to fix the wierd bug XD, to see the bug 
+            // comment the next line 
+            window.location.reload()
         },
         update(){
             axios.patch(`/api/question/${this.reply.question_slug}/reply/${this.reply.id}`,{body:this.reply.reply})
-            .then(res => this.cancel())
+            .then(res => this.cancel(this.reply.reply))
+            // I will add the next line untill now how to fix the wierd bug XD, to see the bug 
+            // comment the next line 
+            window.location.reload()
         }
     }
 }

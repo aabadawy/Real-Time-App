@@ -30,7 +30,8 @@ export default {
     components:{EditReply},
     data(){
         return{
-            editing:false
+            editing:false,
+            beforeEditingReplyBody: ''
         }
     },
     computed:{
@@ -50,10 +51,15 @@ export default {
         },
         edit(){
             this.editing=true
+            this.beforeEditingReplyBody = this.data.reply
         },
         listen(){
-            EventBus.$on('cancelEditing', ()=>{
+            EventBus.$on('cancelEditing', (reply)=>{
                 this.editing = false
+                if(reply != this.data.reply){
+                    this.data.reply = this.beforeEditingReplyBody
+                    this.beforeEditingReplyBody = ''
+                }
             })
         }
     }
