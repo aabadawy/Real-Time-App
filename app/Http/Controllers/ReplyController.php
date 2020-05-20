@@ -6,6 +6,8 @@ use App\Model\Reply;
 use App\Model\Question;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReplyResource;
+use App\notifications\newReplyNotification;
+
 class ReplyController extends Controller
 {
     /**
@@ -37,6 +39,11 @@ class ReplyController extends Controller
     public function store(Question $question,Request $request)
     {
         $reply = $question->replies()->create($request->all());
+
+        //Sending notification to database
+        $user = $question->user; // The question Owner
+        $user->notify(new newReplyNotification($reply)); // pass Reply to notification to save spacific date in database 
+
         return response( new ReplyResource($reply) , 201);
     }
 
