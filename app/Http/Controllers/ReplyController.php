@@ -42,7 +42,8 @@ class ReplyController extends Controller
 
         //Sending notification to database
         $user = $question->user; // The question Owner
-        $user->notify(new newReplyNotification($reply)); // pass Reply to notification to save spacific date in database 
+        if($reply->user_id !== $question->user_id) // Check The reply dosn't belong to the owner of the question
+            $user->notify(new newReplyNotification($reply)); // pass Reply to notification to save spacific date in database 
 
         return response( new ReplyResource($reply) , 201);
     }
