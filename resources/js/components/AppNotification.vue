@@ -7,7 +7,7 @@
             
             <v-btn icon
               v-on="{ ...tooltip, ...menu }">
-                <v-icon :color="color">mdi-alert</v-icon>{{unreadCount}}
+                <v-icon :color="color">add_alert</v-icon>{{unreadCount}}
             </v-btn>
           </template>
           <span>Im A ToolTip</span>
