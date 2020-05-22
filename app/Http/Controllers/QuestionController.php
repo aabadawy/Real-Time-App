@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Question;
+use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\QuestionResource;
 
@@ -77,5 +78,10 @@ class QuestionController extends Controller
     {
         $question->delete();
         return response('Deleted' , 204);
+    }
+
+    public function QuestionsWithCategory($id)
+    {
+        return QuestionResource::collection(Question::where('category_id' , $id)->get());
     }
 }

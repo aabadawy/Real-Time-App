@@ -26,6 +26,7 @@ class QuestionResource extends JsonResource
             'user_id' => $this->user->id,
             'replies' => ReplyResource::collection($this->replies),
             'reply_count' => $this->replies->count(),
+            'category_id' => $this->category_id,
         ];
     }
 }

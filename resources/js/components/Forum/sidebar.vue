@@ -7,7 +7,7 @@
             <v-list-item-group >
                 <v-list-item v-for="category in categories" :key="category.id">
                     <v-list-item-content>
-                        <v-list-item-title >{{category.name}}</v-list-item-title>
+                        <v-list-item-title @click="categoryQuestions(category.id)">{{category.name}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
@@ -25,6 +25,12 @@ export default {
     created(){
         axios.get('/api/category')
         .then(res => {this.categories = res.data.data})
+    },
+    methods:{
+        categoryQuestions(id){
+            
+            EventBus.$emit('getQuestionCategries',id)
+        }
     }
 }
 </script>

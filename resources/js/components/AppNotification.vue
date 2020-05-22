@@ -10,7 +10,6 @@
                 <v-icon :color="color">add_alert</v-icon>{{unreadCount}}
             </v-btn>
           </template>
-          <span>Im A ToolTip</span>
         </v-tooltip>
       </template>
       <v-list>
