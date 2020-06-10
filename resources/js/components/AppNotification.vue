@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
 export default {
     data(){
         return{
@@ -62,6 +63,7 @@ export default {
                 this.unreadCount = res.data.unread.length
                 console.log(this.unread)
             })
+            .catch(error => Exception.handle(error))
         },
         readNotification(notifications){
             axios.post('/api/markAsRead' , {id:notifications.id})

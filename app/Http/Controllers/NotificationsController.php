@@ -7,6 +7,16 @@ use App\Http\Resources\NotificationResource;
 
 class NotificationsController extends Controller
 {
+     /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('JWT');
+    }
+
     public function index()
     {
         return[

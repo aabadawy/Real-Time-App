@@ -35,6 +35,9 @@ import App from './App.vue'
 import User from './Helpers/user.js'
 window.User = User
 
+import Exception from './Helpers/Exception.js'
+window.Exception = Exception
+
 import VueSimplemde from 'vue-simplemde'
 import 'simplemde/dist/simplemde.min.css'
 

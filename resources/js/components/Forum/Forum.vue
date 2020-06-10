@@ -14,7 +14,7 @@
                     
                 </div>
                 <div v-else>
-                    <div class="text-center mt-2">
+                    <div class="text-center mt-2" >
                         <v-btn  @click="getAll()" color="blue lighten-4" class="text-center" v-if="CheckOption">
                             Back<v-icon color="blue">mdi-refresh</v-icon>
                         </v-btn>
