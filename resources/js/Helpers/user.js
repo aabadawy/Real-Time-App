@@ -48,8 +48,11 @@ class User{
 
     id(){
         if(this.loggedIn){
-            const payload = Token.payload(AppStorage.getToken());
-            return payload.sub
+            if(AppStorage.getToken()){
+                const payload = Token.payload(AppStorage.getToken());
+                return payload.sub
+            }
+                
         }
     }
 

@@ -4,7 +4,12 @@
             <single-question  v-else  :data = question ></single-question>
         <v-container>
             <replies :question="question"></replies>
-            <create-reply :question_slug="question.slug"></create-reply>
+            <create-reply v-if="loggedIn" :question_slug="question.slug"></create-reply>
+            <div class="mt-4" v-else>
+                <router-link to="/login">
+                    <v-btn color="blue">logIn To Reply</v-btn>
+                </router-link>
+            </div>
         </v-container>
     </div>
 </template>
@@ -27,6 +32,11 @@ export default {
         this.getQuestion()
         this.listenToEdit()
         this.listenToback()
+    },
+    computed:{
+        loggedIn(){
+            return User.loggedIn();
+        }
     },
     methods:{
         listenToEdit(){
