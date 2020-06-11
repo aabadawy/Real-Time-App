@@ -36,7 +36,8 @@ export default {
         return{
             read : {},
             unread : {},
-            unreadCount : 0
+            unreadCount : 0,
+            soundNotification : "http://soundbible.com/mp3/glass_ping-Go445-1207030150.mp3",
         }
     },
     computed:{
@@ -50,18 +51,31 @@ export default {
         }
         Echo.private('App.User.' + User.id())
           .notification((notification) => {
+              
               this.unread.unshift(notification)
               this.unreadCount ++ ;
+              this.playSound()
           })
     },
     methods:{
+      playSound(){
+        let alert = new Audio(this.soundNotification)
+        let playedPromise = alert.play()
+        if (playedPromise) {
+          playedPromise.catch((e) => {
+              if (e.name === 'NotAllowedError' ||
+                  e.name === 'NotSupportedError') {
+                  console.log(e.name);
+              }
+          });
+        }
+      },
         getNotifications(){
             axios.post('/api/notifications')
             .then(res => {
                 this.read = res.data.read
                 this.unread = res.data.unread
                 this.unreadCount = res.data.unread.length
-                console.log(this.unread)
             })
             .catch(error => Exception.handle(error))
         },

@@ -27,7 +27,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        return  QuestionResource::collection(Question::latest()->get());
+        return  QuestionResource::collection(Question::latest()->paginate(3));
     }
     
     /**
@@ -83,6 +83,7 @@ class QuestionController extends Controller
 
     public function QuestionsWithCategory($id)
     {
+        // this function is logically wrong! but I will fix it soon
         return QuestionResource::collection(Question::where('category_id' , $id)->get());
     }
 }

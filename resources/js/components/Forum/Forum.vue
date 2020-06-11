@@ -24,7 +24,14 @@
                     :key="question.id"
                     :data=question
                     ></question>
-                    
+                    <div class="text-center">
+                        <v-pagination
+                        v-model="meta.current_page"
+                        :length="meta.last_page"
+                        circle
+                        @input="changePage"
+                        ></v-pagination>
+                    </div>
                 </div>
             </v-flex >
             <v-flex xs4>
@@ -42,6 +49,7 @@ export default {
         return{
         questions:{},
         CheckOption : false,
+        meta : {},
         }
     },
     components:{question,sidebar},
@@ -57,12 +65,18 @@ export default {
         })
     },
     methods:{
-        getAll(){
-            axios.get('/api/question')
+        getAll(page){
+            let url = page ?  `/api/question?page=${page}` : '/api/question'
+            axios.get(url)
             .then(res => {this.questions = res.data.data
-            this.CheckOption = false})
+            this.CheckOption = false
+            this.meta = res.data.meta})
             .catch(error => console.log(error.response.data))
-        }
+        },
+        changePage(page){
+           this.getAll(page)
+        },
+        
     }
 }
 </script>
