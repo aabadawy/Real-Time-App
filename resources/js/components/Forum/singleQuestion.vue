@@ -9,7 +9,7 @@
                     <span class="grey--text">Posted {{data.created_at}} By {{data.user}}</span>
                 </div>
                 <v-spacer></v-spacer>
-                <v-btn color="success">{{data.reply_count}} replies</v-btn>
+                <v-btn color="success">{{replyCount}} replies</v-btn>
             </v-card-title>
             <v-card-text v-html="body"></v-card-text>
             <v-card-actions v-if="own" @click="edit">
@@ -30,12 +30,32 @@ export default {
     data(){
         return{
             own : User.own(this.data.user_id),
+            replyCount : this.data.reply_count,
         }
     },
     computed:{
         body(){
             return md.parse(this.data.body)
         },
+    },
+    created(){
+        EventBus.$on('newReply', ()=>{
+            this.replyCount++;
+        });
+
+        Echo.private('App.User.' + User.id())
+          .notification((notification) => {
+              this.replyCount++;
+          })
+
+        Echo.channel('DeleteReplyChannel')
+        .listen('DeleteReplyEvent', (e) => {
+            this.replyCount--;
+        });
+
+        EventBus.$on('deleteReply',()=>{
+            this.replyCount--;
+        });
     },
     methods:{
         Delete(){
