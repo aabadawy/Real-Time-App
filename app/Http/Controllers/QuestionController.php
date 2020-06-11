@@ -6,6 +6,7 @@ use App\Model\Question;
 use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\QuestionResource;
+use App\Http\Requests\QuestionRequest;
 
 class QuestionController extends Controller
 {
@@ -35,7 +36,7 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {   
         // In Next line It gonna Create new question just for authunticate user , with his spacific ID
         // $request['slug'] = str_slug($request->title);

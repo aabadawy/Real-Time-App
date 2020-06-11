@@ -7,10 +7,13 @@
                     v-model="form.name"
                     required
                     ></v-text-field>
-                    <v-btn class="mr-4" color="green" type="submit" v-if="!editSlug">Craete </v-btn>
+                    <div>
+                        <span class="red--text mb-1" v-if="errors.name && !submitStatus">{{errors.name[0]}}</span>
+                    </div>
+                    <v-btn class="mr-4" color="green" type="submit" v-if="!editSlug" :disabled="disabled">Craete </v-btn>
                     <div  v-else>
-                    <v-btn class="mr-4" color="red" type="submit">Update </v-btn>
-                    <v-btn @click="cancel" color="orange"><v-icon dark left>mdi-arrow-left</v-icon>Back</v-btn>
+                    <v-btn class="mr-4" color="red" type="submit" :disabled="disabled">Update </v-btn>
+                    <v-btn @click="cancel" v-if="form.name" color="orange"><v-icon dark left>mdi-arrow-left</v-icon>Back</v-btn>
                     </div>
             </v-form>
             <v-card class="mt-2">
@@ -50,6 +53,8 @@ export default {
             },
             category:{},
             editSlug:null,
+            errors : {},
+            submitStatus : false,
         }
     },
     created(){
@@ -58,7 +63,11 @@ export default {
         }
         axios.get(`/api/category`)
         .then(res => this.categories = res.data.data)
-        
+    },
+    computed:{
+        disabled(){
+            return !(this.form.name)
+        }
     },
     methods:{
         destroy(slug,index){
@@ -73,7 +82,9 @@ export default {
             .then(res => {
                 this.categories.unshift(res.data)
                 this.form.name = null
-            }) //This """"unshift still dosnt workd """"""
+                this.submitStatus = true
+            })
+            .catch(error => this.errors = error.response.data.errors)
         },
         update(){
             axios.patch(`/api/category/${this.editSlug}` ,this.form)
@@ -81,7 +92,9 @@ export default {
                 this.categories.unshift(res.data)
                 this.form.name = null
                 this.editSlug = null
+                this.submitStatus = true
             })
+            .catch(error => this.errors = error.response.data.errors)
         },
         edit(index){
             this.category = this.categories[index]
@@ -93,6 +106,7 @@ export default {
             this.categories.unshift(this.category)
             this.form.name = null
             this.editSlug = null
+            this.submitStatus = true
         }
     }
 }

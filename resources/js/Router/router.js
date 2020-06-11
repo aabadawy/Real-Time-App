@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 
+import parallax from '../components/parallax'
 import Login from '../components/Login/Login'
 import logout from '../components/Login/Logout'
 import signup from '../components/Login/signup'
@@ -14,6 +15,7 @@ import singleQuestion from '../components/Forum/read'
 import CreateCategory from '../components/Category/Read'
 
 const routes = [
+    { path: '/', component: parallax },
     { path: '/login', component: Login },
     { path: '/logout', component: logout},
     { path: '/signup', component: signup},

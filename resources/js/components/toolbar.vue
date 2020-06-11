@@ -1,10 +1,10 @@
 <template>
   <v-card>
-    <v-toolbar dense>
+    <v-toolbar dense color="blue" dark>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
     
     <v-toolbar-title>
-        Home
+      <router-link class="white--text" to="/">Home</router-link>
     </v-toolbar-title>
       <v-spacer></v-spacer>
         <app-notification v-if="loggedIn"></app-notification>
