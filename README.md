@@ -18,7 +18,7 @@ By default, the username is root and password is also root. (This is for Lamp)
 - Run `php artisan jwt:secret`
 - Run `php artisan cache:clear`
 - Run `php artisan config:clear`
-- Run `php artisan server`
+- Run `php artisan serve`
 ### Now The App will work good. But You will need to figure Your Pusher Key to make It _Real Time App_
 #### Notes:
 - First User Will be signup with **id = 1**,Will be the **admin**, yeah it's kind silly. But in future will be change this part. And you can dive into it if you want.
