@@ -61,7 +61,7 @@ class User{
     }
 
     isAdmin(){
-        return this.id() == 15;
+        return this.id() == 1;
     }
 }
 
